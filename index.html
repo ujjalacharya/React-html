@@ -15,11 +15,26 @@
 	<script type="text/babel">
 		// NavBar Component
 		var Navbar = React.createClass({
+			propTypes: {
+				BrandName: React.PropTypes.string
+			},
+			getDefaultProps: function(){
+				return{
+					BrandName : 'Niftygeek',
+					color: 'light'
+				}
+			},
 			render: function(){
+				if (this.props.color == 'dark'){
+					var navClass = "navbar navbar-inverse";
+				}
+				else{
+					var navClass = "navbar navbar-default";
+				}
 				return(
 					<div>
-						<nav className="navbar navbar-default">
-							<div className="container-fluid">
+						<nav className={navClass}>
+							<div className="container">
 								<div className="navbar-header">
 									<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 										<span className="sr-only">Toggle navigation</span>
@@ -27,7 +42,7 @@
 										<span className="icon-bar"></span>
 										<span className="icon-bar"></span>
 									</button>
-									<a className="navbar-brand" href="#">Hello</a>
+									<a className="navbar-brand" href="#">{this.props.BrandName}</a>
 								</div>
 								<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 									<ul className="nav navbar-nav">
@@ -44,13 +59,25 @@
 		
 		// Jumbotron Component
 		var Jumbotron = React.createClass({
+			propTypes: {
+				title: React.PropTypes.string,
+				content: React.PropTypes.string,
+				link: React.PropTypes.string
+			},
+			getDefaultProps: function(){
+				return{
+					title: 'Welcome Everyone!',
+					content: 'This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.',
+					link: 'http://asterdio.com'
+				}
+			},
 			render: function(){
 				return(
 					<div className="jumbotron">
 				      <div className="container">
-				        <h1>Hello, world!</h1>
-				        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-				        <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+				        <h1>{this.props.title}</h1>
+				        <p>{this.props.content}</p>
+				        <p><a className="btn btn-primary btn-lg" href={this.props.link} target="_blank" role="button">Learn more &raquo;</a></p>
 				      </div>
 				    </div>
 				)
@@ -72,13 +99,23 @@
 
 		//Footer Component
 		var Footer = React.createClass({
+			propTypes:{
+				website: React.PropTypes.string,
+				year: React.PropTypes.number.isRequired
+			},
+			getDefaultProps: function(){
+				return{
+					website: 'NiftyGeek',
+					year: 2016
+				}
+			},
 			render: function(){
 				return(
 					<div className="container-fluid">
 						<hr />
 
 				      <footer className="container">
-				        <p>&copy; 2015 MyWebsite, Inc.</p>
+				        <p>&copy; {this.props.year} {this.props.website}, Inc.</p>
 				      </footer>
 				    </div>
 				)
@@ -89,7 +126,7 @@
 			render: function(){
 				return(
 					<div>
-						<Navbar />
+						<Navbar color='dark' />
 						<Jumbotron />
 						<MainPage />
 						<Footer />
